@@ -12,8 +12,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Data\Data.csproj" />
-      <ProjectReference Include="..\Models\Models.csproj" />
+      <ProjectReference Include="..\CSC308.CBR.Data\CSC308.CBR.Data.csproj" />
+      <ProjectReference Include="..\CSC308.CBR.Model\CSC308.CBR.Model.csproj" />
     </ItemGroup>
 
 </Project>
