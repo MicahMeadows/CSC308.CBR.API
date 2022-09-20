@@ -1,7 +1,8 @@
 using System.Runtime.InteropServices.ComTypes;
-using Data.Location;
+using Business.Location;
+using Models.Exception;
 
-namespace Data.Ranking;
+namespace Business.Ranking;
 using Models;
 
 public class RankingRepository : IRankingRepository
@@ -16,13 +17,21 @@ public class RankingRepository : IRankingRepository
     async Task<IEnumerable<Ranking>> GetRankedLocations()
     {
         var locations = await _locationRepository.GetAllLocations();
+        locations = locations.OrderBy(e => e.Rating).Reverse();
         return locations.Select((location, idx) => new Ranking(){Location = location, Rank = idx});
     }
     
     public async Task<Ranking> GetLocationRank(Location location)
     {
         var rankedLocations = await GetRankedLocations();
-        return rankedLocations.First(rankedLocation => rankedLocation.Location.Name.Equals(location.Name));
+        try
+        {
+            return rankedLocations.First(rankedLocation => rankedLocation.Location.Name.Equals(location.Name));
+        }
+        catch (Exception ex)
+        {
+            throw new NoRankingForLocationException();
+        }
     }
 
     public async Task<IEnumerable<Ranking>> GetRankings(int? take, int? skip)

@@ -1,4 +1,4 @@
-namespace Data.Ranking;
+namespace Business.Ranking;
 using Models;
 
 public interface IRankingRepository

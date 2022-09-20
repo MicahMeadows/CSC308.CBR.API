@@ -1,5 +1,6 @@
-using Data.Location;
-using Data.Ranking;
+using Business.Location;
+using Business.Match;
+using Business.Ranking;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<ILocationRepository, LocationRepository>();
 builder.Services.AddSingleton<IRankingRepository, RankingRepository>();
+builder.Services.AddSingleton<IMatchRepository, MatchRepository>();
 
 var app = builder.Build();
 

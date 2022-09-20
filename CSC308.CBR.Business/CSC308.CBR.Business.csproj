@@ -11,4 +11,8 @@
       <ProjectReference Include="..\CSC308.CBR.Model\CSC308.CBR.Model.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
+    </ItemGroup>
+
 </Project>

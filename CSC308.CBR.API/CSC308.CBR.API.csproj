@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CSC308.CBR.Data\CSC308.CBR.Data.csproj" />
+      <ProjectReference Include="..\CSC308.CBR.Business\CSC308.CBR.Business.csproj" />
       <ProjectReference Include="..\CSC308.CBR.Model\CSC308.CBR.Model.csproj" />
     </ItemGroup>
 

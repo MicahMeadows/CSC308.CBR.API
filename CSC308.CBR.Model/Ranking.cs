@@ -2,6 +2,6 @@ namespace Models;
 
 public class Ranking
 {
-    public int Rank { get; set; }
-    public Location Location { get; set; } = null!;
+    public int Rank { get; init; }
+    public Location Location { get; init; } = null!;
 }
