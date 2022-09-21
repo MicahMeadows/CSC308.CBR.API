@@ -27,7 +27,7 @@ namespace CSC308.CBR.API.Controllers
                 var randomLocation = await _locationRepository.GetRandomLocation(blacklist);
                 return Ok(randomLocation);
             }
-            catch (NoLocationsAvailableException ex)
+            catch (NoLocationsAvailableException)
             {
                 return NotFound("No random location available.");
             }

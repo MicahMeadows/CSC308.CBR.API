@@ -1,36 +1,24 @@
-using ILocationRepository = Business.Location.ILocationRepository;
+using Data.Match;
 using Models;
 
 namespace Business.Match;
 
 public class MatchRepository : IMatchRepository
 {
-    private readonly Location.ILocationRepository _locationRepository;
+    private readonly IMatchDataObject _matchDataObject;
 
-    public MatchRepository(Location.ILocationRepository locationRepository)
+    public MatchRepository(IMatchDataObject matchDataObject)
     {
-        _locationRepository = locationRepository;
+        _matchDataObject = matchDataObject;
     }
-    
+
     public async Task<Models.Match> CreateNewMatch()
     {
-        var redTeam = await _locationRepository.GetRandomLocation();
-        var blueTeam = await _locationRepository.GetRandomLocation(new List<Models.Location>()
-        {
-            redTeam
-        });
-        
-        var newMatch = new Models.Match() { RedTeam = redTeam, BlueTeam = blueTeam, MatchID = Guid.NewGuid().ToString() };
-        
-        return newMatch;
+        return await _matchDataObject.CreateNewMatch();
     }
 
     public async Task PostMatchResults(MatchResult matchResult)
     {
-        var winner = await _locationRepository.GetLocationByName(matchResult.Winner.Name);
-        var loser = await _locationRepository.GetLocationByName(matchResult.Loser.Name);
-        winner.Rating++;
-        loser.Rating--;
-        await Task.Delay(0);
+        await _matchDataObject.PostMatchResults(matchResult);
     }
 }

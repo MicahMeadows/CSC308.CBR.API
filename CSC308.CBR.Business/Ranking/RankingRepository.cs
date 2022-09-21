@@ -13,15 +13,15 @@ public class RankingRepository : IRankingRepository
     {
         _locationRepository = locationRepository;
     }
-
-    async Task<IEnumerable<Ranking>> GetRankedLocations()
+    
+    private async Task<IEnumerable<Models.Ranking>> GetRankedLocations()
     {
         var locations = await _locationRepository.GetAllLocations();
         locations = locations.OrderBy(e => e.Rating).Reverse();
-        return locations.Select((location, idx) => new Ranking(){Location = location, Rank = idx});
+        return locations.Select((location, idx) => new Models.Ranking(){Location = location, Rank = idx});
     }
     
-    public async Task<Ranking> GetLocationRank(Location location)
+    public async Task<Models.Ranking> GetLocationRank(Models.Location location)
     {
         var rankedLocations = await GetRankedLocations();
         try
@@ -34,7 +34,7 @@ public class RankingRepository : IRankingRepository
         }
     }
 
-    public async Task<IEnumerable<Ranking>> GetRankings(int? take, int? skip)
+    public async Task<IEnumerable<Models.Ranking>> GetRankings(int? take, int? skip)
     {
         if (take == null && skip == null)
         {

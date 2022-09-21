@@ -44,7 +44,7 @@ public class RankingController : ControllerBase
             var rankingForLocation = await _rankingRepository.GetLocationRank(location);
             return Ok(rankingForLocation);
         }
-        catch (NoRankingForLocationException ex)
+        catch (NoRankingForLocationException)
         {
             return NotFound("Unable to find rank for location.");
         }
@@ -53,5 +53,4 @@ public class RankingController : ControllerBase
             return BadRequest(ex);
         }
     }
-    
 }

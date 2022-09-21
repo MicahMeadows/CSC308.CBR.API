@@ -43,7 +43,7 @@ public class MatchController : ControllerBase
             await _matchRepository.PostMatchResults(matchResult);
             return Ok("Match results logged.");
         }
-        catch (MatchNotFoundException ex)
+        catch (MatchNotFoundException)
         {
             return NotFound("Match not found");
         }
