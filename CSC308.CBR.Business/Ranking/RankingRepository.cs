@@ -28,7 +28,7 @@ public class RankingRepository : IRankingRepository
         {
             return rankedLocations.First(rankedLocation => rankedLocation.Location.Name.Equals(location.Name));
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             throw new NoRankingForLocationException();
         }

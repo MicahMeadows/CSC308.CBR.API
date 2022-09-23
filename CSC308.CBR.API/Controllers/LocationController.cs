@@ -16,7 +16,7 @@ namespace CSC308.CBR.API.Controllers
             _locationRepository = locationRepository;
         }
 
-        [HttpPost]
+        [HttpPost("Random")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Location))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -30,6 +30,32 @@ namespace CSC308.CBR.API.Controllers
             catch (NoLocationsAvailableException)
             {
                 return NotFound("No random location available.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("Name/{name}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Location))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetLocation(string? name)
+        {
+            if (name == null)
+            {
+                return BadRequest("Must supply a name.");
+            }
+
+            try
+            {
+                var result = await _locationRepository.GetLocationByName(name);
+                return Ok(result);
+            }
+            catch (MatchNotFoundException)
+            {
+                return NotFound($"{name} was not found as a location.");
             }
             catch (Exception ex)
             {

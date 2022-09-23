@@ -1,11 +1,11 @@
+using CSC308.CBR.DataObjects;
 using CSC308.CBR.DataObjects.Seeding;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
-namespace CSC308.CBR.DataObjects;
+namespace DataObjects;
 
-// dotnet ef migrations add InitialMigration -c CBRContext -o Migrations --project CSC308.CBR.DataObjects --startup-project CSC308.CBR.API
-
+// dotnet ef migrations add <MigrationName> -c CBRContext -o Migrations/CBRDb --project CSC308.CBR.DataObjects --startup-project CSC308.CBR.API
+// dotnet ef database update -c CBRContext --project CSC308.CBR.DataObjects --startup-project CSC308.CBR.API
 public class CBRContext : DbContext
 {
     public DbSet<DbLocation> Locations { get; set; } = null!;
@@ -20,9 +20,10 @@ public class CBRContext : DbContext
         
         modelBuilder.Entity<DbLocation>(ent =>
         {
-            ent.HasKey(e => e.ID);
-            ent.Property(e => e.ID).ValueGeneratedOnAdd();
+            ent.HasKey(e => e.id);
+            ent.Property(e => e.id).ValueGeneratedOnAdd().IsRequired();
             ent.Property(e => e.rating).IsRequired();
+            ent.ToTable("Location");
         });
 
         var seeder = new Seeder();
@@ -31,11 +32,13 @@ public class CBRContext : DbContext
         modelBuilder.Entity<DbMatch>(ent =>
         {
             ent.HasKey(e => e.ID);
-            ent.Property(e => e.ID).ValueGeneratedOnAdd();
+            ent.Property(e => e.ID).ValueGeneratedOnAdd().IsRequired();
             ent.Property(e => e.BlueTeamID).IsRequired();
             ent.Property(e => e.RedTeamID).IsRequired();
             ent.HasOne(e => e.BlueTeamLocation);
             ent.HasOne(e => e.RedTeamLocation);
+            
+            ent.ToTable("VoteMatch");
         });
         
         base.OnModelCreating(modelBuilder);

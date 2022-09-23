@@ -1,7 +1,6 @@
-using Data.Match;
 using Models;
 
-namespace CSC308.CBR.Data.Match;
+namespace Data.Match;
 
 public class MatchDataObject : IMatchDataObject
 {

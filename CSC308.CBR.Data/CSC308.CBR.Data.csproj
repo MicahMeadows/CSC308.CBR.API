@@ -8,10 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\CSC308.CBR.DataObjects\CSC308.CBR.DataObjects.csproj" />
       <ProjectReference Include="..\CSC308.CBR.Model\CSC308.CBR.Model.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="11.0.1" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 

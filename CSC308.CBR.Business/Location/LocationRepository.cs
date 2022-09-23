@@ -1,6 +1,4 @@
-using System.Runtime.ExceptionServices;
 using Data.Location;
-using Models.Exception;
 
 namespace Business.Location;
 using System.Collections.Generic;

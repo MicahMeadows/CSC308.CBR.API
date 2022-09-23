@@ -1,16 +1,19 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CSC308.CBR.DataObjects;
+namespace DataObjects;
 
-[Table("Match")]
 public class DbMatch
 {
-    public string ID { get; set; } = null!;
-    public string RedTeamID { get; set; } = null!;
-    public string BlueTeamID { get; set; } = null!;
+    public Guid ID { get; set; }
     
+    [ForeignKey("RedTeamLocation")]
+    public Guid RedTeamID { get; set; }
+    
+    
+    [ForeignKey("BlueTeamLocation")]
+    public Guid BlueTeamID { get; set; }
     public DateTime CreationTime { get; set; }
     
-    public virtual DbLocation? RedTeamLocation { get; set; }
-    public virtual DbLocation? BlueTeamLocation { get; set; }
+    public virtual DbLocation RedTeamLocation { get; set; }
+    public virtual DbLocation BlueTeamLocation { get; set; }
 }

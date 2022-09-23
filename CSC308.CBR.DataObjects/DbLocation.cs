@@ -1,12 +1,12 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CSC308.CBR.DataObjects;
+namespace DataObjects;
 
-[Table("Location")]
 public class DbLocation
 {
-    public int ID { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
+    public Guid id { get; set; }
+    public string name { get; set; }
+    public string description { get; set; }
     public double rating { get; set; }
+    public string image_url { get; set; }
 }
