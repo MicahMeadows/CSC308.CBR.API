@@ -10,19 +10,29 @@ public class CBRContext : DbContext
 {
     public DbSet<DbLocation> Locations { get; set; } = null!;
     public DbSet<DbMatch> Matches { get; set; } = null!;
+    public DbSet<DbMatchResult> MatchResults { get; set; } = null!;
 
-    public CBRContext(DbContextOptions<CBRContext> options) : base(options)
-    {
-    }
+    public CBRContext(DbContextOptions<CBRContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<DbMatchResult>(ent =>
+        {
+            ent.HasKey(e => e.MatchID);
+            ent.Property(e => e.LoserID).IsRequired();
+            ent.Property(e => e.WinnerID).IsRequired();
+            ent.Property(e => e.MatchID).IsRequired();
+            ent.HasOne(e => e.Match);
+            ent.HasOne(e => e.Winner);
+            ent.HasOne(e => e.Loser);
+            ent.ToTable("MatchResult");
+        });
         
         modelBuilder.Entity<DbLocation>(ent =>
         {
-            ent.HasKey(e => e.id);
-            ent.Property(e => e.id).ValueGeneratedOnAdd().IsRequired();
-            ent.Property(e => e.rating).IsRequired();
+            ent.HasKey(e => e.ID);
+            ent.Property(e => e.ID).ValueGeneratedOnAdd().IsRequired();
+            ent.Property(e => e.Rating).IsRequired();
             ent.ToTable("Location");
         });
 

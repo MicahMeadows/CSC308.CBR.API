@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\CSC308.CBR.Core\CSC308.CBR.Core.csproj" />
       <ProjectReference Include="..\CSC308.CBR.DataObjects\CSC308.CBR.DataObjects.csproj" />
       <ProjectReference Include="..\CSC308.CBR.Model\CSC308.CBR.Model.csproj" />
     </ItemGroup>

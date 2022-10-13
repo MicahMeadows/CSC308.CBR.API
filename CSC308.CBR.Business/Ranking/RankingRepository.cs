@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices.ComTypes;
 using Business.Location;
+using Data.Location;
 using Models.Exception;
 
 namespace Business.Ranking;
@@ -7,16 +8,17 @@ using Models;
 
 public class RankingRepository : IRankingRepository
 {
-    private readonly ILocationRepository _locationRepository;
+    // private readonly ILocationRepository _locationRepository;
+    private readonly ILocationDataObject _locationDataObject;
 
-    public RankingRepository(ILocationRepository locationRepository)
+    public RankingRepository(ILocationDataObject locationDataObject)
     {
-        _locationRepository = locationRepository;
+        _locationDataObject = locationDataObject;
     }
     
     private async Task<IEnumerable<Models.Ranking>> GetRankedLocations()
     {
-        var locations = await _locationRepository.GetAllLocations();
+        var locations = await _locationDataObject.GetAllLocations();
         locations = locations.OrderBy(e => e.Rating).Reverse();
         return locations.Select((location, idx) => new Models.Ranking(){Location = location, Rank = idx});
     }
@@ -27,6 +29,19 @@ public class RankingRepository : IRankingRepository
         try
         {
             return rankedLocations.First(rankedLocation => rankedLocation.Location.Name.Equals(location.Name));
+        }
+        catch (Exception)
+        {
+            throw new NoRankingForLocationException();
+        }
+    }
+
+    public async Task<Ranking> GetLocationRank(string id)
+    {
+        var rankedLocation = await GetRankedLocations();
+        try
+        {
+            return rankedLocation.First(location => location.Location.ID.ToString().Equals(id));
         }
         catch (Exception)
         {

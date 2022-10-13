@@ -1,3 +1,4 @@
+using Models;
 using Models.Exception;
 
 namespace Data.Location;
@@ -37,5 +38,10 @@ public class LocationDataObject : ILocationDataObject
         await Task.Delay(0);
 
         return randomLocation;
+    }
+
+    public async Task<Models.Location> GetLocationbyID(string id)
+    {
+        throw new NotImplementedException();
     }
 }

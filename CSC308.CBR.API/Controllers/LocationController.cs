@@ -62,6 +62,24 @@ namespace CSC308.CBR.API.Controllers
                 return BadRequest(ex);
             }
         }
+
+
+        [HttpGet("{id}/Details")]
+        [ProducesResponseType(statusCode: StatusCodes.Status200OK, type: typeof(LocationDetails))]
+        [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetLocationDetails(string id)
+        {
+            try
+            {
+                var locationDetails = await _locationRepository.GetLocationDetails(id);
+                return Ok(locationDetails);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
         
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Location>))]

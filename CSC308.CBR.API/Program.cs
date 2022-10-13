@@ -28,6 +28,21 @@ builder.Services.AddScoped<IMatchRepository, MatchRepository>();
 builder.Services.AddScoped<ILocationDataObject, SqlLocationDataObject>();
 builder.Services.AddScoped<IMatchDataObject, SqlMatchDataObject>();
 
+// Setup Cors
+var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy  =>
+        {
+            policy.WithOrigins(
+                "https://localhost:7078",
+                "http://localhost:5029",
+                "https://c811-157-89-197-64.ngrok.io"
+            );
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -37,7 +52,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors(MyAllowSpecificOrigins);
+
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

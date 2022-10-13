@@ -19,5 +19,8 @@ public class MapperProfiles : Profile
             .ForMember(dst => dst.RedTeamID, opt => opt.MapFrom(src => src.RedTeam.ID))
             .ForMember(dst => dst.BlueTeamID, opt => opt.MapFrom(src => src.BlueTeam.ID))
             .ReverseMap();
+
+        CreateMap<Models.MatchResult, DbMatchResult>()
+            .ReverseMap();
     }
 }

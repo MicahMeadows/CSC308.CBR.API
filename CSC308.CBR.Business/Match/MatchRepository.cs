@@ -21,4 +21,16 @@ public class MatchRepository : IMatchRepository
     {
         await _matchDataObject.PostMatchResults(matchResult);
     }
+
+    public async Task<IEnumerable<Models.Match>> GetMatchesForLocation(Models.Location location)
+    {
+        var matches = await _matchDataObject.GetMatchesForLocation(location);
+        return matches;
+    }
+
+    public async Task<IEnumerable<MatchResult>> GetMatchResultsForLocation(Models.Location location)
+    {
+        var matchResults = await _matchDataObject.GetMatchResultsForLocation(location);
+        return matchResults;
+    }
 }

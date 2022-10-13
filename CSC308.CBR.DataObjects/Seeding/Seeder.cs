@@ -35,11 +35,11 @@ public class Seeder
 
             return new DbLocation()
             {
-                rating = 1,
-                description = e.description,
-                name = e.name,
-                id = Guid.NewGuid(),
-                image_url = imageUrl,
+                Rating = 1,
+                Description = e.description,
+                Name = e.name,
+                ID = Guid.NewGuid(),
+                ImageUrl = imageUrl,
             };
         });
 

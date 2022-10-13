@@ -32,4 +32,14 @@ public class MatchDataObject : IMatchDataObject
         loser.Rating--;
         await Task.Delay(0);
     }
+
+    public async Task<IEnumerable<Models.Match>> GetMatchesForLocation(Models.Location location)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IEnumerable<MatchResult>> GetMatchResultsForLocation(Models.Location location)
+    {
+        throw new NotImplementedException();
+    }
 }

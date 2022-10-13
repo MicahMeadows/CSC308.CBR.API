@@ -3,6 +3,7 @@ using DataObjects;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using Models.Exception;
+using DataObjects.Queries;
 
 namespace Data.Location;
 
@@ -27,7 +28,7 @@ public class SqlLocationDataObject : ILocationDataObject
     {
         try
         {
-            var dbLocationWithName = await _context.Locations.AsNoTracking().FirstAsync(e => e.name == name);
+            var dbLocationWithName = await _context.Locations.AsNoTracking().FirstAsync(e => e.Name == name);
             return _mapper.Map<Models.Location>(dbLocationWithName);
         }
         catch (Exception ex)
@@ -38,7 +39,22 @@ public class SqlLocationDataObject : ILocationDataObject
 
     public async Task<Models.Location> GetRandomLocation(List<Models.Location>? blacklist = null)
     {
-        var randomDbLocation = await _context.Locations.OrderBy(e => EF.Functions.Random()).FirstAsync();
-        return _mapper.Map<Models.Location>(randomDbLocation);
+        DbLocation randomLocation;
+        if (blacklist == null)
+        {
+            randomLocation = await _context.GetRandomLocation();
+        }
+        else
+        {
+            var sqlBlacklist = _mapper.Map<IEnumerable<DbLocation>>(blacklist);
+            randomLocation = await _context.GetRandomLocation(sqlBlacklist);
+        }
+        return _mapper.Map<Models.Location>(randomLocation);
+    }
+
+    public async Task<Models.Location> GetLocationbyID(string id)
+    {
+        var dbLocation = await _context.Locations.FirstAsync(x => x.ID.ToString().Equals(id));
+        return _mapper.Map<Models.Location>(dbLocation);
     }
 }

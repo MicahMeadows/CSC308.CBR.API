@@ -1,12 +1,10 @@
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace DataObjects;
 
 public class DbLocation
 {
-    public Guid id { get; set; }
-    public string name { get; set; }
-    public string description { get; set; }
-    public double rating { get; set; }
-    public string image_url { get; set; }
+    public Guid ID { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public double Rating { get; set; }
+    public string ImageUrl { get; set; }
 }
