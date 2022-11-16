@@ -36,14 +36,21 @@ builder.Services.AddCors(options =>
         policy  =>
         {
             policy.WithOrigins(
+                "*",
                 "https://localhost:7078",
                 "http://localhost:5029",
-                "https://c811-157-89-197-64.ngrok.io"
-            );
-        });
+                "https://c811-157-89-197-64.ngrok.io",
+                "http://localhost:50505"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowAnyOrigin();
+    });
 });
 
 var app = builder.Build();
+app.UseCors(MyAllowSpecificOrigins);
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -52,9 +59,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(MyAllowSpecificOrigins);
 
-// app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
