@@ -21,12 +21,8 @@ public static class LocationQueries
             .FirstAsync();
     }
 
-    public static async Task<DbLocation> ModifyRating(
-        this CBRContext context,
-        Guid id,
-        double newRating
-    )
-    {
+    public static async Task<DbLocation> ModifyRating(this CBRContext context,
+        Guid id, double newRating) {
         var location = await context.Locations.FirstAsync(e => e.ID == id);
         location.Rating = newRating;
         return location;
